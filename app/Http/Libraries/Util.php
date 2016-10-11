@@ -1,0 +1,77 @@
+<?php
+
+namespace App\Http\Libraries;
+
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+use anlutro\cURL\cURL;
+
+class Util 
+{
+	public static function Mobra(){
+		$client = new \GuzzleHttp\Client(['base_uri' => 'https://api.mobra.in','cookies'=>true]);
+		$data  = $client->request('POST', '/v1/auth/login', ['form_params'=>['user'=>'dave@adstuna.com','password'=>'Mobrain123'],'cookies' => $cookieJar]);
+	}
+	
+	/**
+	* Get AppThis feed
+	**/
+	public static function appThis(){
+		 $curl = new cURL;
+		
+		$data=$curl->newRequest('get','http://feed.appthis.com/feed/v1?api_key='.env('ADVERTISER_THISAP_KEY').'&format=json');
+		$response = json_decode($data->send());
+
+		return $response;
+	}
+
+	public static function createOffer($offer){
+		 try{
+		 	 $curl = new cURL;
+
+		
+			$data=$curl->newJsonRequest('post',env('API_OFFER_URL').'/v1/offers',$offer)
+			   ->setUser('adstuna')->setPass(env('API_OFFERS_LOOK_KEY'));
+			$response = json_decode($data->send());
+
+			return $response;
+		 }catch(\exception $ex){
+		 	return array();
+		 }
+		
+	}
+
+	public static function updateOffer($offer,$id){
+		try{
+			 $curl = new cURL;
+
+		
+		$data=$curl->newJsonRequest('put',env('API_OFFER_URL').'/v1/offers/'.$id,$offer)
+		   ->setUser('adstuna')->setPass(env('API_OFFERS_LOOK_KEY'));
+		$response = json_decode($data->send());
+
+		return $response;
+		 }catch(\exception $ex){
+		 	return array();
+		 }
+		
+	}
+
+	public static function getOffer($params){
+		try{
+			 $curl = new cURL;
+
+		$url = $curl->buildUrl(env('API_OFFER_URL').'/v1/offers/', $params);
+		$data=$curl->newRequest('get',$url)
+		   ->setUser('adstuna')->setPass(env('API_OFFERS_LOOK_KEY'));
+		$response = json_decode($data->send());
+
+		return $response;
+		 }catch(\exception $ex){
+		 	return array();
+		 }
+		
+	}
+
+}
