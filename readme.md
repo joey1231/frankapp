@@ -30,3 +30,9 @@ Copy the .env.example to created .env file
 php artisan migrate
 
 composer dump-autoload -o & php artisan view:clear & php artisan cache:clear
+
+### Functions
+ 
+| Name | Controller | Description |
+| ---- | ---------- | ----------- | 
+| syncAppThis() | AppController | This function call two api from appThis and offerslook to check for creating and updating offers in offerslook |
