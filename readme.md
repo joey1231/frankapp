@@ -31,8 +31,22 @@ php artisan migrate
 
 composer dump-autoload -o & php artisan view:clear & php artisan cache:clear
 
+
+
 ### Functions
  
 | Name | Controller | Description |
 | ---- | ---------- | ----------- | 
 | syncAppThis() | AppController | This function call two api from appThis and offerslook to check for creating and updating offers in offerslook |
+| checkDeletedOffer() | AppController | This functon call two api from appThis and offerslook to check the different and delete in offersloook if there is difference offers |
+
+### Cron Jobs
+
+add this to cron job * * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1 to run the schedule command
+
+### Page
+
+ This the view page where you can see the logs and you can manually run the Syn application from thisApp to offerslook
+
+http://screencast.com/t/RMpUupP3
+
