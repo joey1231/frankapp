@@ -18,8 +18,9 @@ class AppController extends Controller
     	
     	$offers = Util::appThis();
 
-    	foreach ($offers->offers as $key => $value) {
 
+    	foreach ($offers->offers as $key => $value) {
+				//dd($value);
     		$get_offer = Util::getOffer(array('filters'=>array('name'=>array('EQUAL_TO'=>substr($value->name,0,40)),'advertiser_id'=>array('EQUAL_TO'=>3))));
     		if(isset($get_offer->data->rowset)){
     			if(count($get_offer->data->rowset) >0){
@@ -28,8 +29,8 @@ class AppController extends Controller
 			    				'name'=>$value->name,
 								'advertiser_id'=>3,
 								'revenue'=>$value->campaigns[0]->payout,
-								'payout'=>$value->campaigns[0]->payout * 0.90,
-								'preview_url'=>$value->icon_url,
+								'payout'=>number_format($value->campaigns[0]->payout * 0.90, 2, '.', ''),
+								'preview_url'=>"https://play.google.com/store/apps/details?id=".$value->android_package_name,
 								'destination_url'=>$value->tracking_url,
 								'description'=>$value->description,
 								
@@ -40,11 +41,22 @@ class AppController extends Controller
 			    			
 		    			
 		    			);
+	    			$country_code=array();
 		    		foreach ($value->campaigns[0]->countries as $i => $country) {
+		    			$country_code[]=$country;
+
+		    			//$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
+		    		}
+		    		$countries = Util::getCountryName(implode(';',$country_code));
+		    		foreach ($countries as $c => $country) {
 		    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
 		    		}
+		    		
 		    	$offer_look= Util::updateOffer($offer,$get_offer->data->rowset[0]->id);
-
+		    	if($value->icon_url !=''){
+		    		Util::thumbnail($value->icon_url,$get_offer->data->rowset[0]->id);
+		    	}
+		    	
     			if(Offer::where('advertiser_id',3)->where('offer_id',$value->id)->count() <=0){
     				try{
 	    				$new_offer = new Offer;
@@ -53,8 +65,8 @@ class AppController extends Controller
 						$new_offer->offer_approval=1;
 						$new_offer->pricing_type='CPI';
 						$new_offer->revenue=$value->campaigns[0]->payout;
-						$new_offer->payout=$value->campaigns[0]->payout * 0.90;
-						$new_offer->preview_url=$value->icon_url;
+						$new_offer->payout=number_format($value->campaigns[0]->payout * 0.90, 2, '.', '');
+						$new_offer->preview_url="https://play.google.com/store/apps/details?id=".$value->android_package_name;
 						$new_offer->destination_url=$value->tracking_url;
 						$new_offer->description=$value->description;
 						$new_offer->cap_budget='10000';
@@ -84,7 +96,7 @@ class AppController extends Controller
 		    			$offer_update->name=$value->name;				
 						$offer_update->revenue=$value->campaigns[0]->payout;
 						$offer_update->payout=$value->campaigns[0]->payout * 0.90;
-						$offer_update->preview_url=$value->icon_url;
+						$offer_update->preview_url="https://play.google.com/store/apps/details?id=".$value->android_package_name;
 						$offer_update->destination_url=$value->tracking_url;
 						$offer_update->description=$value->description;
 						$offer_update->offer_category= json_encode($value->categories);
@@ -111,8 +123,8 @@ class AppController extends Controller
 					'offer_approval'=>1,
 					'pricing_type'=>'CPI',
 					'revenue'=>$value->campaigns[0]->payout,
-					'payout'=>$value->campaigns[0]->payout * 0.90,
-					'preview_url'=>$value->icon_url,
+					'payout'=>number_format($value->campaigns[0]->payout * 0.90, 2, '.', ''),
+					'preview_url'=>"https://play.google.com/store/apps/details?id=".$value->android_package_name,
 					'destination_url'=>$value->tracking_url,
 					'description'=>$value->description,
 					
@@ -129,11 +141,25 @@ class AppController extends Controller
 	    			)
 	    			
     			);
+    			$country_code=array();
+		    		foreach ($value->campaigns[0]->countries as $i => $country) {
+		    			$country_code[]=$country;
+
+		    			//$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
+		    		}
+		    		$countries = Util::getCountryName(implode(';',$country_code));
+		    		foreach ($countries as $c => $country) {
+		    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
+		    		}
+		    		
     			$offer_look= Util::createOffer($offer);
     			if(isset($offer_look->data->error)){
 
     			}else{
     				try{
+    					if($value->icon_url !=''){
+				    		Util::thumbnail($value->icon_url,$offer_look->data->offer->id);
+				    	}
 	    				$new_offer = new Offer;
 					    $new_offer->name= isset($value->name) ? $value->name :'';$value->name;				
 					    $new_offer->advertiser_id=3;
@@ -160,6 +186,7 @@ class AppController extends Controller
 								 		'log'=>$offers_log,
 								 		'offer'=>$new_offer
 						);
+						
     				}catch(\exception $ex){
 
     				}
@@ -182,5 +209,42 @@ class AppController extends Controller
         $logs = $log->skip($page * 50)->paginate(50);
 
     	return view('welcome',array('logs' => $logs, 'request' => $request->all(),'page'=>'order'));
+    }
+    public function uploadThumbnail(){
+    	dd(Util::thumbnail('https://lh5.ggpht.com/bRIRN4Tqxhg1eaU9CZnGtCYzKF4hhIgTiloa9nWIGFtq3c3fdhqPtAEnsLRTTvRyA5Dm=w30',1));
+    }
+    public function counries(){
+    	dd(Util::getCountryName('au;usa'));
+    }
+
+    public function checkDeletedOffer(){
+    	set_time_limit(0);
+    	//dd('adfg');
+    	$offers =Util::getOffer(array('limit'=>10000,'filters'=>array('advertiser_id'=>array('EQUAL_TO'=>3))));
+    	
+    	$offers_this = Util::appThis();
+
+    	foreach ($offers->data->rowset as $key => $offer) {
+    		 $flag = false;
+    		foreach ($offers_this->offers  as $c => $value) {
+    			if(substr($value->name,0,40) == $offer->name){
+    				$flag=true;
+    				break;
+    			}
+    		}
+    		if($flag==false){
+    			$params =array( 
+    			'offer'=>[
+    					'status'=>'deleted'
+	    			]
+	    			
+	    			
+    			);
+    		
+    			$offer_look= Util::updateOffer($params,$offer->id);
+    				
+    		}
+    		
+    	}
     }
 }

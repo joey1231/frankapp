@@ -14,3 +14,5 @@
 Route::get('/', 'AppController@index');
 Route::get('/syncAppThis','AppController@syncAppThis');
 Route::get('/test2','AppController@getOffer');
+Route::get('/thumb','AppController@uploadThumbnail');
+Route::get('/checkDeletedOffer','AppController@checkDeletedOffer');

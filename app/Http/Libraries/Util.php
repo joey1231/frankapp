@@ -73,5 +73,42 @@ class Util
 		 }
 		
 	}
+	public static function thumbnail($str,$id){
+		
+		try{
+			$temp= 'temp/'.time().".jpg";
+
+		file_put_contents($temp, file_get_contents($str));
+		$file = curl_file_create($temp);
+		$offer = ['file'=>$file];
+			 $curl = new cURL;
+
+		
+		$data=$curl->newRawRequest ('post',env('API_OFFER_URL').'/v1/offers/'.$id.'/thumbnails',$offer)
+		   ->setUser('adstuna')->setPass(env('API_OFFERS_LOOK_KEY'));
+		$response = json_decode($data->send());
+		unlink($temp);
+			return $response;
+		 }catch(\exception $ex){
+		 	return $ex;
+		 }
+	}
+	public static function getCountryName($code){
+		$country= array();
+		try{
+			$curl = new cURL;
+		
+			$data=$curl->newRequest('get','https://restcountries.eu/rest/v1/alpha?codes='.$code);
+			$response = json_decode($data->send());
+
+			foreach ($response as $key => $value) {
+				$country[]=$value->name;
+			}
+			return $country;
+		}catch(\exception $ex){
+			return $country;
+		}
+		
+	}
 
 }
