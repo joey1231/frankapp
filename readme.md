@@ -10,18 +10,43 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
 
-## Official Documentation
+## APPLICATION Documentation
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
 
-## Contributing
+### Installation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+git clone https://github.com/joey1231/frankapp.git
 
-## Security Vulnerabilities
+cd frankapp
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+composer install
 
-## License
+chmod -R 777 bootstrap/cache storage/
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+create .env file
+
+Copy the .env.example to created .env file
+
+php artisan migrate
+
+composer dump-autoload -o & php artisan view:clear & php artisan cache:clear
+
+
+
+### Functions
+ 
+| Name | Controller | Description |
+| ---- | ---------- | ----------- | 
+| syncAppThis() | AppController | This function call two api from appThis and offerslook to check for creating and updating offers in offerslook |
+| checkDeletedOffer() | AppController | This functon call two api from appThis and offerslook to check the different and delete in offersloook if there is difference offers |
+
+### Cron Jobs
+
+add this to cron job * * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1 to run the schedule command
+
+### Page
+
+ This the view page where you can see the logs and you can manually run the Syn application from thisApp to offerslook
+
+http://screencast.com/t/RMpUupP3
+
