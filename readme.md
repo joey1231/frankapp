@@ -13,3 +13,20 @@ Laravel is accessible, yet powerful, providing tools needed for large, robust ap
 ## APPLICATION Documentation
 
 
+### Installation
+
+git clone https://github.com/joey1231/frankapp.git
+
+cd frankapp
+
+composer install
+
+chmod -R 777 bootstrap/cache storage/
+
+create .env file
+
+Copy the .env.example to created .env file
+
+php artisan migrate
+
+composer dump-autoload -o & php artisan view:clear & php artisan cache:clear
