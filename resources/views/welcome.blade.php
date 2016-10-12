@@ -156,7 +156,7 @@
                             var html="";
                             for(var i=0;i<data.logs.length;i++){
                                 html+="<tr>";
-                                html+="<td>"+data.logs[i].message+"</td>";
+                                html+="<td>"+data.logs[i].log.message+"</td>";
                                 html+="</tr>"
                             }
                              $('#logs').html(html);
@@ -165,6 +165,7 @@
                         error:function(error){
                             console.log(error);
                             alert('Have Exception ERROR');
+                              $('#loading').hide();
                         }
                    });
                 })

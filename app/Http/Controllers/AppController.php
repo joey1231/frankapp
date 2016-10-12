@@ -28,10 +28,11 @@ class AppController extends Controller
 			    			'offer'=>[
 			    				'name'=>$value->name,
 								'advertiser_id'=>3,
+								'status'=>'active',
 								'revenue'=>$value->campaigns[0]->payout,
 								'payout'=>number_format($value->campaigns[0]->payout * 0.90, 2, '.', ''),
 								'preview_url'=>"https://play.google.com/store/apps/details?id=".$value->android_package_name,
-								'destination_url'=>$value->tracking_url,
+								'destination_url'=>$value->tracking_url."?clickid={click_id}&source={aff_id}&source2={source_id}",
 								'description'=>$value->description,
 								
 								
@@ -67,7 +68,7 @@ class AppController extends Controller
 						$new_offer->revenue=$value->campaigns[0]->payout;
 						$new_offer->payout=number_format($value->campaigns[0]->payout * 0.90, 2, '.', '');
 						$new_offer->preview_url="https://play.google.com/store/apps/details?id=".$value->android_package_name;
-						$new_offer->destination_url=$value->tracking_url;
+						$new_offer->destination_url=$value->tracking_url."?clickid={click_id}&source={aff_id}&source2={source_id}";
 						$new_offer->description=$value->description;
 						$new_offer->cap_budget='10000';
 						$new_offer->cap_click=9999999;
@@ -122,10 +123,11 @@ class AppController extends Controller
 					'advertiser_id'=>3,
 					'offer_approval'=>1,
 					'pricing_type'=>'CPI',
+					'status'=>'active',
 					'revenue'=>$value->campaigns[0]->payout,
 					'payout'=>number_format($value->campaigns[0]->payout * 0.90, 2, '.', ''),
 					'preview_url'=>"https://play.google.com/store/apps/details?id=".$value->android_package_name,
-					'destination_url'=>$value->tracking_url,
+					'destination_url'=>$value->tracking_url."?clickid={click_id}&source={aff_id}&source2={source_id}",
 					'description'=>$value->description,
 					
 						
@@ -242,9 +244,20 @@ class AppController extends Controller
     			);
     		
     			$offer_look= Util::updateOffer($params,$offer->id);
-    				
+    			
+				$offers_log= new OffersLog();
+				$offers_log->offer_id = 0;
+				$offers_log->message = $value->name. " Offer DLETED";
+				$offers_log->save();	
     		}
     		
     	}
+
+    	return Response::json([
+            'messages' => 'Successfully Sync AppThis',
+           
+           
+        ], 200, array(), JSON_PRETTY_PRINT);
+    
     }
 }
