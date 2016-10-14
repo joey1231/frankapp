@@ -148,7 +148,7 @@
                 $('#update').click(function(){
                     $('#loading').show();
                    $.ajax({
-                        url:" {{url('/syncAppThis')}} ",
+                        url:" {{url('/syncappthis')}} ",
                         type:'GET',
                         dataType:'JSON',
                         success:function(data){
