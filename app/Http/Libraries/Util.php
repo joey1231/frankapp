@@ -111,4 +111,27 @@ class Util
 		
 	}
 
+	public static function getOffersHasOffers($NetworkId,$api){
+		$args = array(
+        'NetworkId' => $NetworkId,
+        'Target' => 'Affiliate_Offer',
+        'Method' => 'findAll',
+        'api_key' => $api
+   		 );
+		
+
+		try{
+			$curl = new cURL;
+
+			$url = $curl->buildUrl('https://api.hasoffers.com/Apiv3/json', $args);
+			$data=$curl->newRequest('get',$url);
+			$response = json_decode($data->send());
+		return $response;
+
+		}catch(\exception $ex){
+		 	return array();
+		 
+		}
+	}
+
 }

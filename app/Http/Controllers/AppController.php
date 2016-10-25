@@ -79,7 +79,7 @@ class AppController extends Controller
 						$new_offer->offer_category= json_encode($value->categories);
 						$new_offer->save();
 						$offers_log= new OffersLog();
-						$offers_log->offer_id = $new_offer->id;
+						$offers_log->offer_id = 3;
 						$offers_log->message = $value->name. " Offer Created";
 						$offers_log->save();
 						$logs[]= array(
@@ -103,7 +103,7 @@ class AppController extends Controller
 						$offer_update->offer_category= json_encode($value->categories);
 						$offer_update->save();
 						$offers_log= new OffersLog();
-						$offers_log->offer_id = $offer_update->id;
+						$offers_log->offer_id = 3;
 						$offers_log->message = $value->name. " Offer Updated";
 						$offers_log->save();
 						$logs[]= array(
@@ -181,7 +181,7 @@ class AppController extends Controller
 						$new_offer->offer_category= json_encode($value->categories);
 						$new_offer->save();
 						$offers_log= new OffersLog();
-						$offers_log->offer_id = $new_offer->id;
+						$offers_log->offer_id = 3;
 						$offers_log->message = $value->name. " Offer Created";
 						$offers_log->save();
 						$logs[]= array(
@@ -208,9 +208,9 @@ class AppController extends Controller
     public function index(Request $request){
     	$log = new OffersLog();
     	$page = isset($request->page) ? $request->page : 0;
-        $logs = $log->skip($page * 50)->paginate(50);
+        $logs =  $log->where('offer_id',3)->skip($page * 50)->paginate(50);
 
-    	return view('welcome',array('logs' => $logs, 'request' => $request->all(),'page'=>'order'));
+    	return view('appthis.index',array('logs' => $logs, 'request' => $request->all(),'page'=>'appthis'));
     }
     public function uploadThumbnail(){
     	dd(Util::thumbnail('https://lh5.ggpht.com/bRIRN4Tqxhg1eaU9CZnGtCYzKF4hhIgTiloa9nWIGFtq3c3fdhqPtAEnsLRTTvRyA5Dm=w30',1));
