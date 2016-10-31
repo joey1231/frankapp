@@ -22,6 +22,7 @@ class AppController extends Controller
     	foreach ($offers->offers as $key => $value) {
 				//dd($value);
     		$get_offer = Util::getOffer(array('filters'=>array('name'=>array('EQUAL_TO'=>substr($value->name,0,40)),'advertiser_id'=>array('EQUAL_TO'=>3))));
+    		 $platform=Util::platform($value);
     		if(isset($get_offer->data->rowset)){
     			if(count($get_offer->data->rowset) >0){
 	    			$offer =array( 
@@ -37,9 +38,9 @@ class AppController extends Controller
 								
 								
 			    			],
-			    			'offer_category'=>array('name'=>implode(',',$value->categories)),
+			    			'offer_category'=>array('name'=>$value->categories),
 			    			'offer_geo'=>array('target'=>array()),
-			    			
+			    			'offer_platform'=> $platform
 		    			
 		    			);
 	    			$country_code=array();
@@ -132,7 +133,7 @@ class AppController extends Controller
 					
 						
 	    			],
-	    			'offer_category'=>array('name'=>implode(',',$value->categories)),
+	    			'offer_category'=>array('name'=>$value->categories),
 	    			'offer_geo'=>array('target'=>array()),
 	    			'offer_cap'=>array(
 	    				'cap_budget'=>'10000',
@@ -140,7 +141,8 @@ class AppController extends Controller
 						'cap_type'=>2,
 						'cap_conversion'=>10000,
 						'cap_timezone',
-	    			)
+	    			),
+	    			'offer_platform'=> $platform
 	    			
     			);
     			$country_code=array();
@@ -208,7 +210,7 @@ class AppController extends Controller
     public function index(Request $request){
     	$log = new OffersLog();
     	$page = isset($request->page) ? $request->page : 0;
-        $logs =  $log->where('offer_id',3)->skip($page * 50)->paginate(50);
+        $logs =  $log->where('offer_id',3)->orderBy('id','DESC')->skip($page * 50)->paginate(50);
 
     	return view('appthis.index',array('logs' => $logs, 'request' => $request->all(),'page'=>'appthis'));
     }
@@ -247,7 +249,7 @@ class AppController extends Controller
     			
 				$offers_log= new OffersLog();
 				$offers_log->offer_id = 0;
-				$offers_log->message = $value->name. " Offer DLETED";
+				$offers_log->message = $offer->name. " Offer DLETED";
 				$offers_log->save();	
     		}
     		

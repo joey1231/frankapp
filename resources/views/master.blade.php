@@ -45,20 +45,20 @@
                      <li class="@if($page=='mgt') active @endif">
                         <a href="#"><span class="fa fa-tags"></span> <span class="xn-text">Persona.ly</span></a>
                     </li>
-                    <li class="@if($page=='mgt') active @endif">
-                        <a href="#"><span class="fa fa-tags"></span> <span class="xn-text">CPIAPI</span></a>
+                    <li class="@if($page=='cpi') active @endif">
+                        <a href="{{ url('/cpi') }}"><span class="fa fa-tags"></span> <span class="xn-text">CPIAPI</span></a>
                     </li>
                       <li class="@if($page=='mgt') active @endif">
                         <a href="#"><span class="fa fa-tags"></span> <span class="xn-text">Tapgrine</span></a>
                     </li>
-                       <li class="@if($page=='mgt') active @endif">
-                        <a href="#"><span class="fa fa-tags"></span> <span class="xn-text">Crunchiemedia</span></a>
+                       <li class="@if($page=='crunch') active @endif">
+                        <a href="{{ url('/crunchmedia') }}"><span class="fa fa-tags"></span> <span class="xn-text">Crunchiemedia</span></a>
                     </li>
                       <li class="@if($page=='mgt') active @endif">
                         <a href="#"><span class="fa fa-tags"></span> <span class="xn-text">Mobisummer</span></a>
                     </li>
-                     <li class="@if($page=='mgt') active @endif">
-                        <a href="#"><span class="fa fa-tags"></span> <span class="xn-text">Adxperience</span></a>
+                     <li class="@if($page=='adexperience') active @endif">
+                        <a href="{{ url('/adx') }}"><span class="fa fa-tags"></span> <span class="xn-text">Adxperience</span></a>
                     </li>
                      <li class="@if($page=='oneapi') active @endif">
                         <a href="{{url('/oneapi')}}"><span class="fa fa-tags"></span> <span class="xn-text">One-api</span></a>

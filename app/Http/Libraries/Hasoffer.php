@@ -28,10 +28,11 @@ class Hasoffer
     		//sleep(1);
     		
     		$thumbnail_link = self::GetThumbnail($network,$api,$value->id);
+    		$country_code=self::GetCountries($network,$api,$value->id);
 
-    		$countries = self::GetCountries($network,$api,$value->id);
-
+    		$countries = Util::getCountryName(implode(';',$country_code));
     		$categories = self::GetCategories($network,$api,$value->id);
+    		$platform=self::platform($value);
 
     		$tracking_link =  self::generateTrackingLink($network,$api,$value->id,array('clickid'=>'{clickid}','source'=>'{aff_id}','source2'=>'{source_id}'));
 
@@ -50,9 +51,9 @@ class Hasoffer
 								'destination_url'=>$tracking_link,
 								'description'=>$value->description,
 			    			],
-			    			'offer_category'=>array('name'=>implode(',',$categories)),
+			    			'offer_category'=>array('name'=>$categories),
 			    			'offer_geo'=>array('target'=>array()),
-			    			
+			    			'offer_platform'=> $platform
 		    			
 		    			);
 	    			
@@ -95,7 +96,7 @@ class Hasoffer
 					
 						
 	    			],
-	    			'offer_category'=>array('name'=>implode(',',$categories)),
+	    			'offer_category'=>array('name'=>$categories),
 	    			'offer_geo'=>array('target'=>array()),
 	    			'offer_cap'=>array(
 	    				'cap_budget'=>'10000',
@@ -103,7 +104,8 @@ class Hasoffer
 						'cap_type'=>2,
 						'cap_conversion'=>10000,
 						'cap_timezone',
-	    			)
+	    			),
+	    			'offer_platform'=> $platform
 	    			
     			);
 	    			foreach ($countries as $c => $country) {
@@ -186,7 +188,7 @@ class Hasoffer
     			
 				$offers_log= new OffersLog();
 				$offers_log->offer_id = $id;
-				$offers_log->message = $value->name. " Offer DLETED";
+				$offers_log->message = $offer->name. " Offer DLETED";
 				$offers_log->save();	
     		}
     		
@@ -369,7 +371,7 @@ class Hasoffer
 			if($response->response->httpStatus==200){
 				foreach ($response->response->data as $key => $value) {
 					foreach ($value->countries as $c => $cat) {
-						$link[] = substr($cat->name,0,40);
+						$link[] = $key;
 					}
 				}
 			}
@@ -380,6 +382,11 @@ class Hasoffer
 		 	return $link;
 		 
 		}
+	}
+
+	public static function platform($value){
+	
+		return $platform = array('platform'=>'Mobile');
 	}
 
 }

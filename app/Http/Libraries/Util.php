@@ -133,5 +133,20 @@ class Util
 		 
 		}
 	}
-
+	public static function platform($value){
+		$system = array();
+		if(strtolower($value->campaigns[0]->platform='android'){
+			$system[]='android';
+		}
+		if(strtolower($value->campaigns[0]->platform='iphone'){
+			$system[]='ios';
+		}
+		if(strtolower($value->campaigns[0]->platform='ipad'){
+			$system[]='ios';
+		}
+		if(strtolower($value->campaigns[0]->platform='ipod'){
+			$system[]='ios';
+		}
+		return $platform = array('platform'=>'Mobile','system'=>implode(',',$system));
+	}
 }

@@ -3,34 +3,33 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\AppController;
-class SyncOffer extends Command
+use App\Http\Controllers\CrunchController;
+class CrunchCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'syncoffer';
+    protected $signature = 'crunch';
+    protected $ctr;
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'to sysnc offers ';
-    protected $app_controler;
-    
+    protected $description = 'Sync Wadogo Offers';
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(AppController $app_controler)
+    public function __construct(CrunchController $ctr)
     {
         parent::__construct();
-        $this->app_controler = $app_controler;
-      
+        $this->ctr = $ctr;
     }
 
     /**
@@ -40,10 +39,7 @@ class SyncOffer extends Command
      */
     public function handle()
     {
-       $this->app_controler->syncAppThis();
-       $this->app_controler->checkDeletedOffer();
-
-
-     
+        $this->ctr->syncAppThis();
+       $this->ctr->checkDeletedOffer();
     }
 }

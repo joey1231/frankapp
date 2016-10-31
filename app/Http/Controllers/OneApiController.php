@@ -20,7 +20,7 @@ class OneApiController extends Controller
     public function index(Request $request){
     	$log = new OffersLog();
     	$page = isset($request->page) ? $request->page : 0;
-        $logs = $log->where('offer_id',10)->skip($page * 50)->paginate(50);
+        $logs = $log->where('offer_id',10)->orderBy('id','DESC')->skip($page * 50)->paginate(50);
 
     	return view('one-api.index',array('logs' => $logs, 'request' => $request->all(),'page'=>'oneapi'));
     }

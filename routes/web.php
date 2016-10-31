@@ -11,7 +11,11 @@
 |
 */
 
-
+Route::get('/test',function(){
+    echo "Sniper 3D Assassin: Shoot to Kill - by Fun Games For Free";
+    echo "<br/>";
+    echo substr("Sniper 3D Assassin: Shoot to Kill - by Fun Games For Free",0,40);
+});
  Route::get('/', function () {
 
             // pass it off to the view
@@ -28,6 +32,15 @@ Route::group(['middleware' => 'auth:users'], function () {
             // pass it off to the view
             return view('dashboard.index',array('page'=>'dashboard'));
         });
+        Route::get('/syncadx', 'AdexperienceController@syncAppThis');
+        Route::get('/adx', 'AdexperienceController@index');
+
+        Route::get('/synccpi', 'CpiController@syncAppThis');
+        Route::get('/cpi', 'CpiController@index');
+
+
+        Route::get('/synccrunch', 'CrunchController@syncAppThis');
+        Route::get('/crunchmedia', 'CrunchController@index');
 
         Route::get('/syncwadogo', 'WadogoController@syncAppThis');
         Route::get('/wadogo', 'WadogoController@index');
@@ -37,6 +50,8 @@ Route::group(['middleware' => 'auth:users'], function () {
 
      	Route::get('/appthis', 'AppController@index');
 		Route::get('/syncappthis','AppController@syncAppThis');
+
+
 		//Route::get('/test2','AppController@getOffer');
 		//Route::get('/thumb','AppController@uploadThumbnail');
 		//Route::get('/checkDeletedOffer','AppController@checkDeletedOffer');
