@@ -117,7 +117,9 @@ class Crunchiemedia
 	    			foreach ($countries as $c => $country) {
 			    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
 			    	}	
+
 	    			$offer_look= Util::createOffer($offer);
+	    			dd(	$offer_look);
 	    			if(isset($offer_look->data->error)){
 	    				$offers_log= new OffersLog();
 							
