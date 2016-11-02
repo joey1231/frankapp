@@ -61,7 +61,7 @@ class Hasoffer
 		    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
 		    	}	
 		    	$offer_look= Util::updateOffer($offer,$get_offer->data->rowset[0]->id);
-
+		    
 		    	if($thumbnail_link !=''){
 		    		Util::thumbnail($thumbnail_link,$get_offer->data->rowset[0]->id);
 		    	}
@@ -114,9 +114,8 @@ class Hasoffer
 			    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
 			    	}	
 	    			$offer_look= Util::createOffer($offer);
-	    			dd($offer_look);
+	    			dd($offer);
 	    			if(isset($offer_look->data->error)){
-	    				dd($offer);
 	    				$offers_log= new OffersLog();
 							
 							$offers_log->message = $value->name. " Offer error : ".$offer_look->data->error->error;
