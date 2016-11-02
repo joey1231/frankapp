@@ -107,14 +107,14 @@ class Hasoffer
 						'cap_conversion'=>10000,
 						'cap_timezone',
 	    			),
-	    			
+	    			'offer_platform'=> array('target'=>[$platform])
 	    			
     			);
 	    			foreach ($countries as $c => $country) {
 			    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
 			    	}	
 	    			$offer_look= Util::createOffer($offer);
-	    			//dd($offer);
+	    			dd($offer);
 	    			dd(	$offer_look);
 	    			if(isset($offer_look->data->error)){
 	    				$offers_log= new OffersLog();
