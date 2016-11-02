@@ -53,7 +53,7 @@ class Hasoffer
 			    			],
 			    			'offer_category'=>array('name'=>substr(implode(',',$categories),0,40)),
 			    			'offer_geo'=>array('target'=>array()),
-			    			'offer_platform'=> $platform
+			    			'offer_platform'=> array('target'=>array($platform)) 
 		    			
 		    			);
 	    			
@@ -107,14 +107,14 @@ class Hasoffer
 						'cap_conversion'=>10000,
 						'cap_timezone',
 	    			),
-	    			'offer_platform'=> $platform
+	    			'offer_platform'=> array('target'=>array($platform))
 	    			
     			);
 	    			foreach ($countries as $c => $country) {
 			    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
 			    	}	
 	    			$offer_look= Util::createOffer($offer);
-	    			dd($offer);
+	    			//dd($offer);
 	    			dd(	$offer_look);
 	    			if(isset($offer_look->data->error)){
 	    				$offers_log= new OffersLog();
