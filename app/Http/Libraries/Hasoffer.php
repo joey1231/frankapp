@@ -379,9 +379,11 @@ class Hasoffer
 				foreach ($response->response->data as $key => $value) {
 					foreach ($value->countries as $c => $cat) {
 						$link[] = $key;
+						dd($cat);
 					}
 				}
 			}
+
 
 		return $link;
 
