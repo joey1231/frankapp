@@ -29,7 +29,7 @@ class Hasoffer
     		
     		$thumbnail_link = self::GetThumbnail($network,$api,$value->id);
     		$country_code=self::GetCountries($network,$api,$value->id);
-
+    		dd($country_code);
     		$countries = Util::getCountryName(implode(';',$country_code));
     		$categories = self::GetCategories($network,$api,$value->id);
     		$platform=self::platform($value);
