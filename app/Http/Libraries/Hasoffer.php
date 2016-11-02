@@ -378,8 +378,8 @@ class Hasoffer
 			if($response->response->httpStatus==200){
 				foreach ($response->response->data as $key => $value) {
 					foreach ($value->countries as $c => $cat) {
-						$link[] = $key;
-						dd($cat);
+						$link[] = $cat->code;
+						
 					}
 				}
 			}
