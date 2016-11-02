@@ -395,7 +395,8 @@ class Hasoffer
 
 	public static function platform($value){
 	
-		return $platform = array('platform'=>'Mobile');
+		return $platform = array('platform'=>'Mobile',"system": null,
+            "version": null);
 	}
 
 }
