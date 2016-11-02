@@ -29,7 +29,7 @@ class Hasoffer
     		
     		$thumbnail_link = self::GetThumbnail($network,$api,$value->id);
     		$country_code=self::GetCountries($network,$api,$value->id);
-    		dd($country_code);
+    		//dd($country_code);
     		$countries = Util::getCountryName(implode(';',$country_code));
     		$categories = self::GetCategories($network,$api,$value->id);
     		$platform=self::platform($value);
@@ -114,7 +114,7 @@ class Hasoffer
 			    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
 			    	}	
 	    			$offer_look= Util::createOffer($offer);
-	    			dd($offer);
+	    			//dd($offer);
 	    			dd(	$offer_look);
 	    			if(isset($offer_look->data->error)){
 	    				$offers_log= new OffersLog();
