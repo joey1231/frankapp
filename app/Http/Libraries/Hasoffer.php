@@ -61,7 +61,7 @@ class Hasoffer
 		    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
 		    	}	
 		    	$offer_look= Util::updateOffer($offer,$get_offer->data->rowset[0]->id);
-
+		    	dd($offer_look);
 		    	if($thumbnail_link !=''){
 		    		Util::thumbnail($thumbnail_link,$get_offer->data->rowset[0]->id);
 		    	}
@@ -75,6 +75,8 @@ class Hasoffer
 							 		'log'=>$offers_log,
 							 		
 						);
+
+						
    	
     				}catch(\exception $ex){
 
@@ -112,6 +114,7 @@ class Hasoffer
 			    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
 			    	}	
 	    			$offer_look= Util::createOffer($offer);
+	    			dd($offer_look);
 	    			if(isset($offer_look->data->error)){
 	    				$offers_log= new OffersLog();
 							
@@ -122,6 +125,7 @@ class Hasoffer
 									 		'log'=>$offers_log,
 									 		
 							);
+							
 	    				
 	    			}else{
 	    				try{
@@ -164,34 +168,36 @@ class Hasoffer
    
     	$offers_this = self::getOffersHasOffers($network,$api);
 
-    	foreach ($offers->data->rowset as $key => $offer) {
-    		 $flag = false;
+    	if(isset($get_offer->data->rowset)){
+	    	foreach ($offers->data->rowset as $key => $offer) {
+	    		 $flag = false;
 
-    		 foreach ($offers_this->response->data as $key => $value) {
-    				$value=$value->Offer;
-    		
-    			if(substr($value->name,0,40) == $offer->name){
-    				$flag=true;
-    				break;
-    			}
-    		}
-    		if($flag==false){
-    			$params =array( 
-    			'offer'=>[
-    					'status'=>'deleted'
-	    			]
+	    		 foreach ($offers_this->response->data as $key => $value) {
+	    				$value=$value->Offer;
+	    		
+	    			if(substr($value->name,0,40) == $offer->name){
+	    				$flag=true;
+	    				break;
+	    			}
+	    		}
+	    		if($flag==false){
+	    			$params =array( 
+	    			'offer'=>[
+	    					'status'=>'deleted'
+		    			]
+		    			
+		    			
+	    			);
+	    		
+	    			$offer_look= Util::updateOffer($params,$offer->id);
 	    			
-	    			
-    			);
-    		
-    			$offer_look= Util::updateOffer($params,$offer->id);
-    			
-				$offers_log= new OffersLog();
-				$offers_log->offer_id = $id;
-				$offers_log->message = $offer->name. " Offer DLETED";
-				$offers_log->save();	
-    		}
-    		
+					$offers_log= new OffersLog();
+					$offers_log->offer_id = $id;
+					$offers_log->message = $offer->name. " Offer DLETED";
+					$offers_log->save();	
+	    		}
+	    		
+	    	}
     	}
 
     	return Response::json([
