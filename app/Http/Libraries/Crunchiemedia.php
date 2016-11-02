@@ -56,7 +56,7 @@ class Crunchiemedia
 								'destination_url'=>$tracking_link,
 								'description'=>$value->Description,
 			    			],
-			    			'offer_category'=>array('name'=>$categories),
+			    			'offer_category'=>array('name'=>substr(implode(',',$categories),0,40)),
 			    			'offer_geo'=>array('target'=>array()),
 			    			'offer_platform'=> $platform
 		    			
@@ -102,7 +102,7 @@ class Crunchiemedia
 					
 						
 	    			],
-	    			'offer_category'=>array('name'=>$categories),
+	    			'offer_category'=>array('name'=>substr(implode(',',$categories),0,40)),
 	    			'offer_geo'=>array('target'=>array()),
 	    			'offer_cap'=>array(
 	    				'cap_budget'=>'10000',

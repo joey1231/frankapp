@@ -51,7 +51,7 @@ class Hasoffer
 								'destination_url'=>$tracking_link,
 								'description'=>$value->description,
 			    			],
-			    			'offer_category'=>array('name'=>$categories),
+			    			'offer_category'=>array('name'=>substr(implode(',',$categories),0,40)),
 			    			'offer_geo'=>array('target'=>array()),
 			    			'offer_platform'=> $platform
 		    			
@@ -61,7 +61,7 @@ class Hasoffer
 		    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
 		    	}	
 		    	$offer_look= Util::updateOffer($offer,$get_offer->data->rowset[0]->id);
-		    
+
 		    	if($thumbnail_link !=''){
 		    		Util::thumbnail($thumbnail_link,$get_offer->data->rowset[0]->id);
 		    	}
@@ -98,7 +98,7 @@ class Hasoffer
 					
 						
 	    			],
-	    			'offer_category'=>array('name'=>$categories),
+	    			'offer_category'=>array('name'=>substr(implode(',',$categories),0,40)),
 	    			'offer_geo'=>array('target'=>array()),
 	    			'offer_cap'=>array(
 	    				'cap_budget'=>'10000',
@@ -114,7 +114,7 @@ class Hasoffer
 			    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
 			    	}	
 	    			$offer_look= Util::createOffer($offer);
-	    			dd($offer);
+	    			
 	    			if(isset($offer_look->data->error)){
 	    				$offers_log= new OffersLog();
 							
