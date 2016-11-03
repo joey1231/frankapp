@@ -166,7 +166,7 @@ class Crunchiemedia
 
 	}
 
-	public static getOffer($apikey){
+	public static function getOffer($apikey){
 		$args = array(
         'token' => $apikey
    		 );
