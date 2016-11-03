@@ -119,7 +119,7 @@ class Crunchiemedia
 			    	}	
 
 	    			$offer_look= Util::createOffer($offer);
-	    			dd(	$offer_look);
+	    			//dd(	$offer_look);
 	    			if(isset($offer_look->data->error)){
 	    				$offers_log= new OffersLog();
 							
