@@ -92,7 +92,7 @@ class Crunchiemedia
     				'name'=>substr($value->OfferName,0,40),
 					'advertiser_id'=>$id,
 					'offer_approval'=>1,
-					'pricing_type'=>$value->PayoutType,
+					'pricing_type'=>strtoupper($value->PayoutType),
 					'status'=>'active',
 					'revenue'=>number_format($payout,2, '.', ''),
 					'payout'=>number_format($payout * 0.90, 2, '.', ''),
