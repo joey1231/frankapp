@@ -52,7 +52,7 @@ class Cpiapi
 								'status'=>'active',
 								'revenue'=>number_format($payout,2, '.', ''),
 								'payout'=>number_format($payout * 0.90, 2, '.', ''),
-								'preview_url'=>$value->preview_url,
+								'preview_url'=>$value->previewURL,
 								'destination_url'=>$tracking_link,
 								'description'=>$value->description,
 			    			],
@@ -96,7 +96,7 @@ class Cpiapi
 					'status'=>'active',
 					'revenue'=>number_format($payout,2, '.', ''),
 					'payout'=>number_format($payout * 0.90, 2, '.', ''),
-					'preview_url'=>$value->preview_url,
+					'preview_url'=>$value->previewURL,
 					'destination_url'=>$tracking_link,
 					'description'=>$value->description,
 					

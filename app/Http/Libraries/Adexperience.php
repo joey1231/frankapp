@@ -18,7 +18,7 @@ class Adexperience
     	
     	$offers = self::getOffer($api);
 
-    	
+    	dd($offers);
     	foreach ($offers->response->data->offers as $key => $value) {
     		
 
