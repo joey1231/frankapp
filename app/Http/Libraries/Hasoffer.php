@@ -31,11 +31,12 @@ class Hasoffer
     		$country_code=self::GetCountries($network,$api,$value->id);
     		//dd($country_code);
     		$countries = Util::getCountryName(implode(';',$country_code));
+    		//dd($countries);
     		$categories = self::GetCategories($network,$api,$value->id);
     		$platform=self::platform($value);
 
     		$tracking_link =  self::generateTrackingLink($network,$api,$value->id,array('clickid'=>'{clickid}','source'=>'{aff_id}','source2'=>'{source_id}'));
-
+    		//dd(	$get_offer);
     		if(isset($get_offer->data->rowset)){
     			if(count($get_offer->data->rowset) >0){
     				
@@ -61,10 +62,24 @@ class Hasoffer
 		    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
 		    	}	
 		    	$offer_look= Util::updateOffer($offer,$get_offer->data->rowset[0]->id);
+		    	//dd($offer_look);
 
 		    	if($thumbnail_link !=''){
 		    		Util::thumbnail($thumbnail_link,$get_offer->data->rowset[0]->id);
 		    	}
+		    	if(isset($offer_look->data->error)){
+	    				$offers_log= new OffersLog();
+							
+					$offers_log->message = $value->name. " Offer error : ".$offer_look->data->error->error;
+					$offers_log->offer_id=$id;
+					$offers_log->save();
+					$logs[]= array(
+									 		'log'=>$offers_log,
+									 		
+					);
+							
+	    				
+	    		}else{
 		    	try{
 	 
 						$offers_log= new OffersLog();
@@ -81,6 +96,7 @@ class Hasoffer
     				}catch(\exception $ex){
 
     				}
+    			}
     			
     		}else{
     			$offer =array( 
@@ -115,7 +131,7 @@ class Hasoffer
 			    	}	
 	    			$offer_look= Util::createOffer($offer);
 	    			//dd($offer);
-	    			dd(	$offer_look);
+	    			//dd(	$offer_look);
 	    			if(isset($offer_look->data->error)){
 	    				$offers_log= new OffersLog();
 							
@@ -151,6 +167,8 @@ class Hasoffer
 	    			}
     			
     			}
+    		}else{
+    			dd(	$get_offer);	
     		}
     		
     		
@@ -376,6 +394,7 @@ class Hasoffer
 			$data=$curl->newRequest('get',$url);
 			$response = json_decode($data->send());
 			if($response->response->httpStatus==200){
+				//dd($response->response);
 				foreach ($response->response->data as $key => $value) {
 					foreach ($value->countries as $c => $cat) {
 						$link[] = $cat->code;
