@@ -58,7 +58,7 @@ class Crunchiemedia
 			    			],
 			    			'offer_category'=>array('name'=>substr(implode(',',$categories),0,40)),
 			    			'offer_geo'=>array('target'=>array()),
-			    			'offer_platform'=> $platform
+			    			'offer_platform'=> array('target'=>[$platform])
 		    			
 		    			);
 	    			
@@ -111,7 +111,7 @@ class Crunchiemedia
 						'cap_conversion'=>10000,
 						'cap_timezone',
 	    			),
-			    	'offer_platform'=> $platform
+			    	'offer_platform'=> array('target'=>[$platform])
 	    			
     			);
 	    			foreach ($countries as $c => $country) {

@@ -18,7 +18,7 @@ class Adexperience
     	
     	$offers = self::getOffer($api);
 
-    	dd($offers);
+    	
     	foreach ($offers->response->data->offers as $key => $value) {
     		
 
@@ -58,16 +58,16 @@ class Adexperience
 			    			],
 			    			'offer_category'=>array('name'=>substr(implode(',',$categories),0,40)),
 			    			'offer_geo'=>array('target'=>array()),
-			    			'offer_platform'=> $platform
+			    			'offer_platform'=> array('target'=>[$platform])
 		    			
 		    			);
 	    			
 		    		foreach ($countries as $c => $country) {
 		    			$offer['offer_geo']['target'][] = array('country'=>$country,'type'=>1);
 		    		}	
-		    	
+		    		
 		    	$offer_look= Util::updateOffer($offer,$get_offer->data->rowset[0]->id);
-
+		    	
 		    	if($thumbnail_link !=''){
 		    		Util::thumbnail($thumbnail_link,$get_offer->data->rowset[0]->id);
 		    	}
@@ -111,7 +111,7 @@ class Adexperience
 						'cap_conversion'=>10000,
 						'cap_timezone',
 	    			),
-			    	'offer_platform'=> $platform
+			    	'offer_platform'=> array('target'=>[$platform])
 	    			
     			);
 	    			foreach ($countries as $c => $country) {

@@ -54,7 +54,7 @@ class Hasoffer
 			    			],
 			    			'offer_category'=>array('name'=>substr(implode(',',$categories),0,40)),
 			    			'offer_geo'=>array('target'=>array()),
-			    			'offer_platform'=> array('target'=>array($platform)) 
+			    			'offer_platform'=> array('target'=>[$platform])
 		    			
 		    			);
 	    			
