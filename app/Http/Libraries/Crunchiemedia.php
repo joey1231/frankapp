@@ -18,7 +18,7 @@ class Crunchiemedia
     	
     	$offers = self::getOffer($api);
 
-
+    	
     	foreach ($offers->Offer as $key => $value) {
     		
 
@@ -175,12 +175,15 @@ class Crunchiemedia
 		try{
 			$curl = new cURL;
 
-			$url = $curl->buildUrl('http://api.crunchiemedia.com/api/index.cfm', $args);
+			$url = $curl->buildUrl('https://api.crunchiemedia.com/api/index.cfm', $args);
+
 			$data=$curl->newRequest('get',$url);
+			
 			$response = json_decode($data->send());
 		return $response;
 
 		}catch(\exception $ex){
+			dd($ex);
 		 	return array();
 		 
 		}
