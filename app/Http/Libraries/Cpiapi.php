@@ -54,7 +54,7 @@ class Cpiapi
 								'payout'=>number_format($payout * 0.90, 2, '.', ''),
 								'preview_url'=>$value->previewURL,
 								'destination_url'=>$tracking_link,
-								'description'=>$value->description,
+								'description'=>$value->name,
 			    			],
 			    			'offer_category'=>array('name'=>substr(implode(',',$categories),0,40)),
 			    			'offer_geo'=>array('target'=>array()),
@@ -98,7 +98,7 @@ class Cpiapi
 					'payout'=>number_format($payout * 0.90, 2, '.', ''),
 					'preview_url'=>$value->previewURL,
 					'destination_url'=>$tracking_link,
-					'description'=>$value->description,
+					'description'=>$value->name,
 					
 						
 	    			],
