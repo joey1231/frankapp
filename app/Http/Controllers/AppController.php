@@ -40,7 +40,7 @@ class AppController extends Controller
 			    			],
 			    			'offer_category'=>array('name'=>$value->categories),
 			    			'offer_geo'=>array('target'=>array()),
-			    			'offer_platform'=> array('target'=>[$platform])
+			    			'offer_platform'=> array('target'=>$platform)
 		    			
 		    			);
 	    			$country_code=array();
@@ -142,7 +142,7 @@ class AppController extends Controller
 						'cap_conversion'=>10000,
 						'cap_timezone',
 	    			),
-	    			'offer_platform'=> array('target'=>[$platform])
+	    			'offer_platform'=> array('target'=>$platform)
 	    			
     			);
     			$country_code=array();
@@ -198,6 +198,8 @@ class AppController extends Controller
     				}
     			
     			}
+    		}else{
+    			dd(	$get_offer);	
     		}
     		
 		}

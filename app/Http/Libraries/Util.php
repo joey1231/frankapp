@@ -135,6 +135,7 @@ class Util
 	}
 	public static function platform($value){
 		$system = array();
+		$data =array();
 		if(strtolower($value->campaigns[0]->platform)=='android'){
 			$system[]='android';
 		}
@@ -147,6 +148,10 @@ class Util
 		if(strtolower($value->campaigns[0]->platform)=='ipod'){
 			$system[]='ios';
 		}
-		return $platform = array('platform'=>'Mobile','system'=>implode(',',$system));
+		foreach ($system as $key => $value) {
+			 $data[] = array('platform'=>'Mobile','system'=>$value,'version'=>array());
+		}
+		//return $platform = array('platform'=>'Mobile','system'=>implode(',',$system));
+		return $data;
 	}
 }
